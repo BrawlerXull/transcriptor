@@ -1,0 +1,23 @@
+{
+  "name": "brawlerxull-transcriptor",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "frontend",
+      "backend"
+    ]
+  },
+  "scripts": {
+    "frontend-dev": "cd frontend && npm run dev",
+    "backend-dev": "cd backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && pip install wheel && uvicorn api.index:app --reload",
+    "dev": "concurrently \"npm run frontend-dev\" \"npm run backend-dev\"",
+    "build": "cd frontend && npm run build",
+    "start-frontend": "cd frontend && npm run start",
+    "lint-frontend": "cd frontend && npm run lint"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "next": "14.2.16"
+  }
+}
