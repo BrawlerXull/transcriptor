@@ -5,7 +5,7 @@ import { open } from 'sqlite'
 export async function GET() {
   try {
     const db = await open({
-      filename: './transcripts.db',
+      filename: './tmp/transcripts.db',
       driver: sqlite3.Database
     })
 
