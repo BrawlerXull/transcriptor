@@ -2,9 +2,11 @@
 
 # dependencies
 /node_modules
+/venv
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+api/__pycache__
 
 # testing
 /coverage

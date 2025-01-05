@@ -16,7 +16,7 @@ export function useTranscripts() {
   useEffect(() => {
     const fetchTranscripts = async () => {
       try {
-        const response = await fetch('/api/transcripts');
+        const response = await fetch('http://localhost:8000/api/transcripts');
         if (!response.ok) {
           throw new Error('Failed to fetch transcripts');
         }
