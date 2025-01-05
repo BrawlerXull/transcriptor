@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import sqlite3 from 'sqlite3'
 import { open } from 'sqlite'
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
-    const formData = await request.formData()
-    const file = formData.get('file') as File
+    // const formData = await request.formData()
+    // const file = formData.get('file') as File
 
-    if (!file) {
-      return NextResponse.json({ error: 'No file provided' }, { status: 400 })
-    }
+    // if (!file) {
+    //   return NextResponse.json({ error: 'No file provided' }, { status: 400 })
+    // }
 
     const transcriptions = [
       "The sound of the wind swaying the trees as the sun begins to set paints a picture of tranquility, while the distant hum of the city reminds us that life moves forward in all corners of the world.",

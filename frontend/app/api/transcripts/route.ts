@@ -17,7 +17,7 @@ export async function GET() {
       )
     `)
 
-    const transcripts = await db.all('SELECT * FROM transcripts ORDER BY created_at DESC LIMIT 5')
+    const transcripts = await db.all('SELECT * FROM transcripts ORDER BY created_at DESC')
     await db.close()
 
     return NextResponse.json(transcripts)

@@ -1,4 +1,3 @@
-// hooks/useRecording.ts
 import { useState } from 'react'
 import { useAudioRecorder } from '@/hooks/useAudioRecorder'
 
@@ -14,7 +13,7 @@ export function useRecording() {
     } else {
       startRecording()
     }
-    setIsRecording(!isRecording)
+    setIsRecording(!isRecording) 
   }
 
   return { isRecording, audioFile, toggleRecording }
