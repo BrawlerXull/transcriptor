@@ -1,102 +1,50 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import { useAudioRecorder } from '@/hooks/useAudioRecorder'
 import { TranscriptList } from '@/components/TranscriptList'
-import { MoonIcon, SunIcon, Mic, Upload, Play, Loader2, FileAudio } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import { MoonIcon, SunIcon, Mic, Play, Loader2, FileAudio } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
-import { useToast } from '@/hooks/use-toast'
+
+import { useAppToast } from '@/hooks/useAppToast'
+import { useRecording } from '@/hooks/useRecording'
+
+import { useTranscription } from '@/hooks/useTranscription'
+import { useThemeToggle } from "@/hooks/usetheme"
 
 export default function Home() {
-  const [isRecording, setIsRecording] = useState(false)
-  const [audioFile, setAudioFile] = useState<File | null>(null)
-  const [transcript, setTranscript] = useState('')
-  const [isTranscribing, setIsTranscribing] = useState(false)
-  const { startRecording, stopRecording } = useAudioRecorder()
-  const { toast } = useToast()
-  const { theme, setTheme } = useTheme()
+  const { showToast } = useAppToast()
+  const { theme, toggleTheme } = useThemeToggle()
+  const { isRecording, audioFile, toggleRecording } = useRecording()
+  const { transcript, isTranscribing, uploadFile, transcribeFile } = useTranscription()
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      setAudioFile(file)
-      toast({
-        title: "File uploaded",
-        description: `${file.name} has been successfully uploaded.`,
-      })
+      uploadFile(file)
+      showToast("File uploaded", `${file.name} has been successfully uploaded.`)
     }
   }
 
   const handleTranscribe = async () => {
     if (!audioFile) {
-      toast({
-        title: "Error",
-        description: "Please record audio or upload a file first.",
-        variant: "destructive",
-      })
+      showToast("Error", "Please record audio or upload a file first.", 'destructive')
       return
     }
 
-    setIsTranscribing(true)
-    const formData = new FormData()
-    formData.append('file', audioFile)
-
     try {
-      const response = await fetch('/api/transcribe', {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!response.ok) {
-        throw new Error('Transcription failed')
-      }
-
-      const data = await response.json()
-      setTranscript(data.text)
-      toast({
-        title: "Transcription complete",
-        description: "Your audio has been successfully transcribed.",
-      })
+      await transcribeFile(audioFile)
+      showToast("Transcription complete", "Your audio has been successfully transcribed.")
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to transcribe audio. Please try again.",
-        variant: "destructive",
-      })
-    } finally {
-      setIsTranscribing(false)
+      showToast("Error", "Failed to transcribe audio. Please try again.", 'destructive')
     }
-  }
-
-  const toggleRecording = () => {
-    if (isRecording) {
-      stopRecording().then(setAudioFile)
-      toast({
-        title: "Recording stopped",
-        description: "Your audio has been successfully recorded.",
-      })
-    } else {
-      startRecording()
-      toast({
-        title: "Recording started",
-        description: "Speak clearly into your microphone.",
-      })
-    }
-    setIsRecording(!isRecording)
-  }
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   return (
@@ -200,4 +148,3 @@ export default function Home() {
     </div>
   )
 }
-

@@ -1,45 +1,14 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { motion, AnimatePresence } from 'framer-motion'
-import { Loader2, ChevronDown, ChevronUp } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-
-interface Transcript {
-  id: number;
-  text: string;
-  created_at: string;
-}
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
+import { Loader2, ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useTranscripts } from "@/hooks/useTranscripts";
 
 export function TranscriptList() {
-  const [transcripts, setTranscripts] = useState<Transcript[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [expandedId, setExpandedId] = useState<number | null>(null)
-
-  useEffect(() => {
-    const fetchTranscripts = async () => {
-      try {
-        const response = await fetch('/api/transcripts')
-        if (!response.ok) {
-          throw new Error('Failed to fetch transcripts')
-        }
-        const data = await response.json()
-        setTranscripts(data)
-      } catch (error) {
-        console.error('Error fetching transcripts:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchTranscripts()
-  }, [])
-
-  const toggleExpand = (id: number) => {
-    setExpandedId(expandedId === id ? null : id)
-  }
+  const { transcripts, isLoading, expandedId, toggleExpand } = useTranscripts();
 
   return (
     <Card>
@@ -102,6 +71,5 @@ export function TranscriptList() {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
-
