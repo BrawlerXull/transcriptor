@@ -14,7 +14,7 @@ export function useTranscription() {
     formData.append('file', file)
 
     try {
-      const response = await fetch('http://localhost:8000/api/transcribe', { method: 'POST', body: formData })
+      const response = await fetch('/api/transcribe', { method: 'POST', body: formData })
       if (!response.ok) throw new Error('Transcription failed')
       const data = await response.json()
       setTranscript(data.text)
