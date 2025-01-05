@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const sampleAudioPath = path.join(process.cwd(), 'public', 'sample.mp3')
 

@@ -44,6 +44,7 @@ export default function Home() {
       showToast("Transcription complete", "Your audio has been successfully transcribed.")
     } catch (error) {
       showToast("Error", "Failed to transcribe audio. Please try again.", 'destructive')
+      console.log(error)
     }
   }
 
