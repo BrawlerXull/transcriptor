@@ -51,7 +51,7 @@ BrawlerXull-transcriptor/
 
 ## Setup Instructions
 
-### Backend (FastAPI)
+### Backend (FastAPI) (Optional as API is also defined on frontend)
 1. Navigate to the backend directory:
    ```bash
    cd backend
@@ -74,6 +74,24 @@ BrawlerXull-transcriptor/
    ```
 
 5. The API will be accessible at `http://127.0.0.1:8000`.
+   
+7. Uncomment these lines in `frontend/next.config.js`
+   
+   ```
+   /** @type {import('next').NextConfig} */
+    const nextConfig = {
+      rewrites: async () => {
+        return [
+          // {
+          //   source: '/api/:path*',
+          //   destination: 'http://localhost:8000/api/:path*', // Proxy to backend on port 8000
+          // },
+        ];
+      },
+    };
+    
+    module.exports = nextConfig;
+   ```
 
 ### Frontend (Next.js)
 1. Navigate to the frontend directory:
