@@ -95,7 +95,7 @@ BrawlerXull-transcriptor/
 
 ---
 
-## API Endpoints
+<!-- ## API Endpoints
 
 ### `/api/transcribe` (POST)
 - **Description**: Accepts an audio file and returns a hardcoded transcription.
@@ -116,7 +116,7 @@ BrawlerXull-transcriptor/
   - Body: `{"text": "Sample text"}`
 - **Response**: Audio file (MIME type: `audio/mpeg`).
 
----
+--- -->
 
 ## Additional Features
 

@@ -22,7 +22,7 @@ export async function POST() {
     const randomTranscript = transcriptions[Math.floor(Math.random() * transcriptions.length)]
 
     const db = await open({
-      filename: '/tmp/transcripts.db',
+      filename: './transcripts.db',
       driver: sqlite3.Database
     })
 
